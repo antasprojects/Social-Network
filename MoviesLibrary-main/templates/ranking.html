@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Ranking
+{% endblock %}
+
+{% block main %}
+
+
+<h2>Here is top list of the movies you watched and rated</h2>
+<br>
+<br>
+<br>
+
+<table>
+    <tbody>
+        {% for movie in data  %}
+
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <img src="{{ movie.img }}" style="max-width: 200px; max-height: 250px;">
+                </td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.actors }}</td>
+
+                <td>
+                    {% for star in range(movie.rating) %}
+                        ⭐
+                    {% endfor %}
+                </td>
+
+
+
+
+
+                <td>
+                    <form action="/delete_from_ranking" method="post" style="display: inline;">
+                        <input type="hidden" name="movie" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }}">
+                        <button class="btn btn-danger btn-sm" type="submit">Delete from ranking</button>
+                    </form>
+                </td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

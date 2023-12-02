@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Index
+{% endblock %}
+
+
+{% block main %}
+
+
+<h2>Here you can see list of movies to watch! </h2>
+<br>
+<br>
+<br>
+
+
+{% if data %}
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th><h2>Title</h2></th>
+            <th><h2>Main cast</h2></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movie in data  %}
+            <tr>
+                <td>
+                    <img src="{{ movie.img }}" style="max-width: 200px; max-height: 250px;">
+                </td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.actors }}</td>
+                <td>
+                    <form action="/add_to_watched" method="post">
+                        <input type="hidden" name="movie" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }}">
+                        <button class="btn btn-warning btn-sm" type="submit">I already watched it!</button>
+                    </form>
+                    <form action="/delete_from_watchlist" method="post">
+                        <input type="hidden" name="movie" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }}">
+                        <button class="btn btn-danger btn-sm" type="submit">Delete from watchlist</button>
+                    </form>
+                </td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    {% if data is defined %}
+    <p></p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

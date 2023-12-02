@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Index
+{% endblock %}
+
+
+{% block main %}
+
+
+<h2>Here you can see the movies you watched and rate them</h2>
+<br>
+<br>
+<br>
+
+{% if data %}
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th><h2>Title</h2></th>
+            <th><h2>Main cast</h2></th>
+            <th><h2>Rate the movie!</h2></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movie in data  %}
+            <tr>
+                <td>
+                    <img src="{{ movie.img }}" style="max-width: 200px; max-height: 250px;">
+                </td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.actors }}</td>
+                <td>
+                    <form action="/rate_movie" method="post">
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <button class="btn btn-outline-warning btn-sm" type="submit" name="rating" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }};;1">1⭐</button>
+                    <button class="btn btn-outline-warning btn-sm" type="submit" name="rating" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }};;2">2⭐</button>
+                    <button class="btn btn-outline-warning btn-sm" type="submit" name="rating" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }};;3">3⭐</button>
+                    <button class="btn btn-outline-warning btn-sm" type="submit" name="rating" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }};;4">4⭐</button>
+                    <button class="btn btn-outline-warning btn-sm" type="submit" name="rating" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }};;5">5⭐</button>
+
+                </form>
+                </td>
+                <td>
+                    <form action="/delete_from_watchedlist" method="post" style="display: inline;">
+                        <input type="hidden" name="movie" value="{{ movie.img }};;{{ movie.title }};;{{ movie.actors }}">
+                        <button class="btn btn-danger btn-sm" type="submit">Delete from watched list</button>
+                    </form>
+                </td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+</table>
+{% else %}
+    {% if data is defined %}
+    <p></p>
+    {% endif %}
+{% endif %}
+
+
+{% endblock %}
