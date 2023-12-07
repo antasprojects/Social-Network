@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+
+<h2>Search for the movie title</h2>
+<br>
+
+    <form action="/search" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Enter the movie title" type="text">
+        </div>
+        <button class="btn btn-secondary" type="submit">Search</button>
+    </form>
+    <br>
+    <br>
+
+    {% if data %}
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th><h2>Title</h2></th>
+                <th><h2>Main cast</h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in data %}
+                <tr>
+                    <td>
+                        <img src="{{ movie.image }}" alt="{{ movie.title }} Image" style="max-width: 200px; max-height: 250px;">
+                    </td>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.actors }}</td>
+                    <td>
+                        <form action="/add_to_watchlist" method="post" style="display: inline;">
+                            <input type="hidden" name="movie" value="{{ movie.image }};;{{ movie.title }};;{{ movie.actors }}">
+                            <button class="btn btn-warning btn-sm" type="submit">Add to watch list</button>
+                        </form>
+                        <br>
+                        <br>
+
+
+
+                        <form action="/add_to_watchedlist" method="post" style="display: inline;">
+                            <input type="hidden" name="movie" value="{{ movie.image }};;{{ movie.title }};;{{ movie.actors }}">
+                            <button class="btn btn-warning btn-sm" type="submit">Add to already watched</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    {% if data is defined %}
+    <p>No results found.</p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
